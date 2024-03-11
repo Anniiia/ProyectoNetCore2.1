@@ -1,0 +1,11 @@
+﻿@model List<Accion>
+<h1>@ViewData["PRUEBA"]</h1>
+
+<ul>
+    @foreach (Accion ac in Model)
+    {
+        <li>@ac.ID-------------@ac.Nombre</li>
+
+    }
+</ul>
+

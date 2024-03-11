@@ -1,0 +1,117 @@
+﻿@model Accion
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-style-3 mb-30">
+        <div class="card-content">
+            <h4>Resumen transacción</h4>
+            <br />
+            <form method="post">
+                @* @Html.AntiForgeryToken() *@
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th>
+                                <h6></h6>
+                            </th>
+                            <th>
+                                <h6>Nombre Empresa/Accion</h6>
+                            </th>
+                            <th>
+                                <h6>Precio acción</h6>
+                            </th>
+                            <th>
+                                <h6>Cantidad de acciones</h6>
+                            </th>
+                            <th>
+                                <h6>Total</h6>
+                            </th>
+                        </tr>
+                        <!-- end table row-->
+                    </thead>
+                    <tbody class="text-center">
+                      
+                        <tr>
+                            <td class="max-width">
+                                <div class="select-style-1">
+                                    <p name="idaccion">@Model.ID</p>
+                                </div>
+                            </td>
+                            <td class="max-width">
+                                <div class="select-style-1">
+                                    <p>@Model.Nombre</p>
+                                </div>
+                            </td>
+                            <td class="max-width">
+                                <div class="select-style-1">
+                                    <p id="precio" name="precio">@Model.Ultimo </p>€
+                                </div>
+                            </td>
+                            <td class="max-width">
+                                <div class="select-style-1">
+                                    <div class="select-position">
+                                        @using (@Html.BeginForm("CompraCompleta", "Tienda", FormMethod.Post))
+{
+                                            <select id="cantidad" name="cantidad">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="max-width">
+                                <p></p>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="3" class="text-right max-width"><strong>Total</strong></td>
+                            <td id="total" name="total" style="text-align:center"><strong ></strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                @* <a asp-controller="Tienda" asp-action="CompraCompleta" asp-route-idaccion="@Model.ID" asp-route-precio="@Model.Ultimo" class="main-btn primary-btn btn-hover">Realizar compra</a> *@
+                <button class="main-btn primary-btn btn-hover">
+                    Realizar compra
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            var precioReset = $('#precio').text().replace(',', '');
+            var precio = $('#precio').text().replace(/,/g, '').replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            precioReset = parseFloat(precioReset);
+            $('#precio').text(precio);
+            var cantidad = parseFloat($('#cantidad').val());
+            var total = parseFloat(precioReset * cantidad).toFixed(2).toString();
+            total = total.replace(".", ",");
+            total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#total strong').text(total + " €");
+            $("#cantidad").change(function () {
+                var cantidad = parseFloat($('#cantidad').val());
+                var total = parseFloat(precioReset * cantidad).toFixed(2).toString();
+                total = total.replace(".", ",");
+                total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                $('#total strong').text(total + " €");
+            })
+        })
+    </script>
+}
+

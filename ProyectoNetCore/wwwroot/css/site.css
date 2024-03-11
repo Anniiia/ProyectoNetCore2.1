@@ -1,0 +1,186 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+body {
+    background-color: #f8f9fa;
+}
+
+.login-container {
+    margin-top: 100px;
+    /* max-width: 400px; */
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-login {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #940c25;
+    border: none;
+}
+
+    .btn-login:hover {
+        background-color: #b45566;
+    }
+
+.btn-signup {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #1e0207;
+    border: none;
+}
+
+    .btn-signup:hover {
+        background-color: #4a0613;
+    }
+
+.btn-forgot {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .btn-forgot:hover {
+        text-decoration: underline;
+    }
+
+body {
+    background-color: #f8f9fa;
+}
+
+.login-container {
+    margin-top: 100px;
+    /* max-width: 400px; */
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-login {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #940c25;
+    border: none;
+}
+
+    .btn-login:hover {
+        background-color: #b45566;
+    }
+
+.btn-signup {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #1e0207;
+    border: none;
+}
+
+    .btn-signup:hover {
+        background-color: #4a0613;
+    }
+
+.btn-forgot {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .btn-forgot:hover {
+        text-decoration: underline;
+    }
+.custom-table {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+    /* Estilo para las celdas de encabezado */
+    .custom-table thead th {
+        background-color: #940c25;
+        color: white;
+        border-color: #3f0510;
+        font-weight: bold;
+    }
+    /* Estilo para las filas impares */
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #f4e7e9;
+    }
+    /* Estilo para las celdas */
+    .custom-table td, .custom-table th {
+        border-color: #dee2e6;
+    }
+
+    .custom-table thead tr {
+        background-color: #940c25 !important
+    }
+
+.btn-compra {
+    border-radius: 5px;
+    background-color: #1e0207;
+    border: none;
+    color: white;
+}
+
+    .btn-compra:hover {
+        background-color: #4a0613;
+    }

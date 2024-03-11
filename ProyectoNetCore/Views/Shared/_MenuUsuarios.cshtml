@@ -1,0 +1,90 @@
+﻿@{
+    string usuario = Context.Session.GetString("USUARIO");
+}
+
+@if (usuario == null)
+{
+    <li class="nav-item">
+        <a asp-controller="Usuarios" asp-action="Login"
+           class="nav-link">
+            Log In
+        </a>
+    </li>
+}
+else
+{
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            @usuario
+        </a>
+        <ul class="dropdown-menu">
+            <li class="nav-item">
+                <a asp-controller="Tienda" asp-action="Pendientes"
+                   class="nav-link">
+                    Revision
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Tienda" asp-action="Resumen"
+                   class="nav-link">
+                    Resumen
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Usuarios" asp-action="Logout"
+                   class="nav-link">
+                    Cerrar sesión @usuario
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+
+@*     <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            @usuario
+        </a
+        <ul class="dropdown-menu">
+            <li class="nav-item">
+                <a asp-controller="Tienda" asp-action="Pendientes"
+                   class="nav-link">
+                    Revision
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Tienda" asp-action="Resumen"
+                   class="nav-link">
+                    Resumen
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Usuarios" asp-action="Logout"
+                   class="nav-link">
+                    Cerrar sesión @usuario
+                </a>
+            </li> *@
+@*         </ul>
+    </li>
+ *@
+@*     <li class="nav-item">
+        <a asp-controller="Usuarios" asp-action="Logout"
+           class="nav-link">
+            Cerrar sesión @usuario
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-controller="Tienda" asp-action="Pendientes"
+           class="nav-link">
+            Revision
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-controller="Tienda" asp-action="Resumen"
+           class="nav-link">
+            Resumen
+        </a>
+    </li> *@
+
+}

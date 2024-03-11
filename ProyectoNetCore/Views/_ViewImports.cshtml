@@ -1,0 +1,13 @@
+﻿@using ProyectoNetCore
+@using ProyectoNetCore.Models
+@using ProyectoNetCore.Repositories
+@using Microsoft.Extensions.Caching.Memory
+
+
+@inject IMemoryCache memoryCache
+@inject RepositoryAcciones repo
+
+
+
+@inject RepositoryUsuarios repoUser
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

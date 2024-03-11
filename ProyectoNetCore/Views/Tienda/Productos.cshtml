@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ProyectoNetCore.Models.Accion>﻿
+@{
+
+    List <Accion> accPendientes = memoryCache.Get<List<Accion>>("PENDIENTES");
+}
+@* @if (accPendientes != null)
+
+{
+    
+    @foreach (Accion a in accPendientes)
+{
+    <h2>@a.ID</h2>
+}} *@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h6 class="mb-10">Listado compras</h6>
+            <div class="table-wrapper table-responsive">
+                <form method="post">
+                @Html.AntiForgeryToken()
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.ID)</h6>
+                            </th>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.Nombre)</h6>
+                            </th>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.Ultimo)</h6>
+                            </th>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.Maximo)</h6>
+                            </th>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.Minimo)</h6>
+                            </th>
+                            <th>
+                                <h6>@Html.DisplayNameFor(model => model.Cambio)</h6>
+                            </th>
+                            <th>
+                                <h6>Cambio %</h6>
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+                                <h6>Acciones</h6>
+                            </th>
+                            <th style="text-align:left"><h6>Pte.</h6></th>
+                        </tr>
+                        <!-- end table row-->
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="max-width">
+                                    <p>@Html.DisplayFor(modelItem => item.ID)</p>
+                                </td>
+                                <td class="max-width">
+                                    <p>@Html.DisplayFor(modelItem => item.Nombre)</p>
+                                </td>
+                                <td class="max-width">
+                                    <p>@Html.DisplayFor(modelItem => item.Ultimo)</p>
+                                </td>
+                                <td class="max-width">
+                                    <p>@Html.DisplayFor(modelItem => item.Maximo)</p>
+                                </td>
+                                <td class="max-width">
+                                    <p>@Html.DisplayFor(modelItem => item.Minimo)</p>
+                                </td>
+                                @if (double.Parse(item.Cambio) < 0)
+                                {
+                                    <td class="max-width" ><p><strong style="color:red">@Html.DisplayFor(modelItem => item.Cambio)</strong></p></td>
+                                }
+                                else
+                                {
+                                    <td class="max-width"><p><strong style="color:green!important">@Html.DisplayFor(modelItem => item.Cambio)</strong></p></td>
+                                }
+                                @{
+                                    var porcentaje = @item.CambioPorcentaje.Split("%");
+                                    double numPorcentaje = double.Parse(porcentaje[0]);
+                                }
+                                @if (numPorcentaje < 0)
+                                {
+                                    <td class="max-width"><p><strong style="color:red">@Html.DisplayFor(modelItem => item.CambioPorcentaje)</strong></p></td>
+                                    <td><strong><i style="color:red; font-weight:bold" class="lni lni-arrow-down"></i></strong></td>
+                                }
+                                else
+                                {
+                                    <td class="max-width"><p><strong style="color:green!important">@Html.DisplayFor(modelItem => item.CambioPorcentaje)</strong></p></td>
+                                    <td><strong><i style="color:green; font-weight:bold" class="lni lni-arrow-up"></i></strong></td>
+                                }
+                               
+                            
+
+                                <td>
+                                    <a asp-controller="Tienda" asp-action="PedidoFinal" asp-route-idaccion="@item.ID" class="btn btn-outline-dark btn-compra">Comprar</a>
+                                </td>
+
+                                    
+                                      @if (accPendientes != null&&accPendientes.Find(z => z.ID == item.ID) != null)
+                                    {
+                                        <td>
+                                      <div class="form-check checkbox-style mb-20">
+                                          <a asp-controller="tienda" asp-action="productos" asp-route-ideliminar="@item.ID" class="btn"><i class="lni lni-trash-can"></i></a>
+                                       </div>
+                                    </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                      <div class="form-check checkbox-style mb-20">
+                                          <a asp-controller="tienda" asp-action="productos" asp-route-addpendiente="@item.ID" class="btn"><i class="lni lni-plus"></i></a>
+                                       </div>
+                                    </td>
+                                    }                              
+                                 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                </form>
+                <!-- end table -->
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
