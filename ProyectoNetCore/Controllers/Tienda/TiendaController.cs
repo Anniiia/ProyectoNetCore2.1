@@ -36,7 +36,7 @@ namespace ProyectoNetCore.Controllers.Tienda
 
             double Totalcompras = await this.repoCompras.buscarComprasAsync(usuario);
 
-            return StatusCode(StatusCodes.Status200OK, Totalcompras);
+            return StatusCode(StatusCodes.Status200OK, Totalcompras); 
             // return View(Totalcompras);
         }
 
