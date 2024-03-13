@@ -5,6 +5,34 @@
 
 }
 
+@* @section Scripts {
+    <script>
+        $(document).ready(function () {
+            var elemento = document.getElementById('#usuarios');
+
+            // Agregar el evento click
+            elemento.addEventListener('click', function () {
+                // Alternar entre las clases
+                if (elemento.classList.contains('nav-link dropdown-toggle')) {
+                    elemento.classList.remove('nav-link dropdown-toggle');
+                    elemento.classList.add('nav-link dropdown-toggle show');
+                } else {
+                    elemento.classList.remove('dropdown-menu');
+                    elemento.classList.add('dropdown-menu show');
+                }
+                var ariaExpanded = $("#usuarios a").getAttribute('aria-expanded');
+
+                // Cambiar el valor de aria-expanded a false si es true, y viceversa
+                var nuevoValor = ariaExpanded === 'true' ? 'false' : 'true';
+
+                // Asignar el nuevo valor al atributo aria-expanded
+                $("#usuario a").setAttribute('aria-expanded', nuevoValor);
+            });
+        })
+    </script>
+} *@
+
+
 @if (usuario == null)
 {
     <li class="nav-item">
@@ -16,8 +44,7 @@
 }
 else
 {
-
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown" id="usuarios">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
             @usuario
         </a>
@@ -25,15 +52,16 @@ else
             <li class="nav-item">
                 <a asp-controller="Tienda" asp-action="Pendientes"
                    class="nav-link">
-                    Pendientes
-                </a>
-                @if (acciones != null)
-                {
-                    <span>
-                         @acciones.Count
-                    </span>
+                    Pendientes: 
+                    @if (acciones != null)
+                    {
+                        <span style="color:lightslategrey">
+                            @acciones.Count
+                        </span>
 
-                }
+                    }
+                </a>
+                
             </li>
             <li class="nav-item">
                 <a asp-controller="Tienda" asp-action="Resumen"
@@ -43,7 +71,7 @@ else
             </li>
             <li class="nav-item">
                 <a asp-controller="Usuarios" asp-action="Logout"
-                   class="nav-link">
+                   class="nav-link text-danger">
                     Cerrar sesión @usuario
                 </a>
             </li>
