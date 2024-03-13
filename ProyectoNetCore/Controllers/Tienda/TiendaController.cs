@@ -28,6 +28,14 @@ namespace ProyectoNetCore.Controllers.Tienda
             this.memoryCache = memoryCache;
         }
 
+        public async Task<IActionResult> _GraficoDineroInvertido()
+        {
+            return PartialView("_GraficoDineroInvertido");
+        }
+        public async Task<IActionResult> _GraficoDineroGanado()
+        {
+            return PartialView("_GraficoDineroGanado");
+        }
         public async Task<IActionResult> _TotalGanancias()
         {
 
