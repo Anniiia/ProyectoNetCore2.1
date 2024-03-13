@@ -1,5 +1,8 @@
 ﻿@{
     string usuario = Context.Session.GetString("USUARIO");
+
+    List<Accion> acciones = memoryCache.Get<List<Accion>>("PENDIENTES");
+
 }
 
 @if (usuario == null)
@@ -22,8 +25,15 @@ else
             <li class="nav-item">
                 <a asp-controller="Tienda" asp-action="Pendientes"
                    class="nav-link">
-                    Revision
+                    Pendientes
                 </a>
+                @if (acciones != null)
+                {
+                    <span>
+                         @acciones.Count
+                    </span>
+
+                }
             </li>
             <li class="nav-item">
                 <a asp-controller="Tienda" asp-action="Resumen"

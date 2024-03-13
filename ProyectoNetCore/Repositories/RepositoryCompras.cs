@@ -37,7 +37,27 @@ namespace ProyectoNetCore.Repositories
         }
 
 
-        public async Task<double> buscarComprasAsync(int idusuario)
+        public async Task<int> numeroComprasAsync(int idusuario)
+        {
+            var consulta = from datos in this.contextCompras.Compras where (datos.idUsuairo == idusuario) select datos.idUsuairo;
+
+            //int CantidadTotal = consulta.Sum(x=>x.Cantidad);
+            int cantidad = consulta.Count();
+
+            return cantidad;
+        }
+        public async Task<int> cantidadComprasAsync(int idusuario)
+        {
+            var consulta = from datos in this.contextCompras.Compras where(datos.idUsuairo == idusuario) select datos.Cantidad;
+
+            //int CantidadTotal = consulta.Sum(x=>x.Cantidad);
+            int cantidad = consulta.Sum();
+
+            return cantidad;
+        }
+
+
+        public async Task<double> totalComprasAsync(int idusuario)
         {
             var consulta = from datos in this.contextCompras.Compras where datos.idUsuairo == idusuario select datos.Total;
 

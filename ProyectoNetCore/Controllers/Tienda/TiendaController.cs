@@ -28,16 +28,66 @@ namespace ProyectoNetCore.Controllers.Tienda
             this.memoryCache = memoryCache;
         }
 
+        public async Task<IActionResult> _TotalGanancias()
+        {
+
+            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+
+            //double TotalGananciasCompras = await this.repoCompras.totalComprasAsync(usuario);
+
+            double TotalGananciasCompras = 1505.12;
+            //int totalCompras = 3;
+            return PartialView("_TotalGanancias", TotalGananciasCompras);
+        }
+
+        public async Task<IActionResult> _TotalInvertido()
+        {
+
+            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+
+            double TotalInvertidoCompras = await this.repoCompras.totalComprasAsync(usuario);
+
+            //int totalCompras = 3;
+            return PartialView("_TotalInvertido", TotalInvertidoCompras);
+        }
+
+        public async Task<IActionResult> _ComprasRealizadas()
+        {
+
+            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+
+            //int totalCompras = await this.repoCompras.totalComprasAsync(usuario);
+
+            int totalNumeroCompras = await this.repoCompras.numeroComprasAsync(usuario);
+            ViewData["TOTALNUMEROCOMPRAS"] = totalNumeroCompras;
+
+            //int totalCompras = 3;
+            return PartialView("_ComprasRealizadas",totalNumeroCompras);
+        }
+
+        public async Task<IActionResult> _TotalAcciones()
+        {
+
+            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+
+            //int totalCompras = await this.repoCompras.totalComprasAsync(usuario);
+
+            int totalCompras = await this.repoCompras.cantidadComprasAsync(usuario);
+            ViewData["TOTALCOMPRAS"] = totalCompras;
+            //int totalCompras = 3;
+            return PartialView("_TotalAcciones",totalCompras);
+        }
+
 
         public async Task<IActionResult> Resumen()
         {
 
             int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
 
-            double Totalcompras = await this.repoCompras.buscarComprasAsync(usuario);
+            double Totalcompras = await this.repoCompras.totalComprasAsync(usuario);
 
-            return StatusCode(StatusCodes.Status200OK, Totalcompras); 
-            // return View(Totalcompras);
+            //return StatusCode(StatusCodes.Status200OK, Totalcompras); 
+             return View();
         }
 
 
@@ -48,6 +98,40 @@ namespace ProyectoNetCore.Controllers.Tienda
             ViewData["MENSAJE"] = "compra realizada";
             return View();
             
+        }
+
+        public IActionResult Pendientes()
+        {
+            if (HttpContext.Session.GetString("USUARIO") == null)
+            {
+                return RedirectToAction("AccesoDenegado", "Managed");
+            }
+
+            List<Accion> acciones =  new List<Accion>();
+            if (this.memoryCache.Get<List<Accion>>("PENDIENTES") != null) 
+            {
+                acciones = this.memoryCache.Get<List<Accion>>("PENDIENTES").ToList();
+            }
+           
+
+            return View(acciones);
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Pendientes(int? idaccion
+/*             string? producto*/)
+        {
+            //COMPROBAMOS SI EXISTE NUESTRO USUARIO ANTES 
+            //DE REALIZAR LA COMPRA
+            if (HttpContext.Session.GetString("USUARIO") == null)
+            {
+                return RedirectToAction("AccesoDenegado", "Managed");
+            }
+            else
+            {
+
+                return RedirectToAction("PedidoFinal", idaccion);
+            }
         }
         public async Task<IActionResult> Productos(int? addpendiente, int? ideliminar)
         {
@@ -176,8 +260,11 @@ namespace ProyectoNetCore.Controllers.Tienda
 
 
                 this.memoryCache.Remove("ACCION");
-                //al realizarse la compra, se borra los datos en cache de esa accion y se bloque la entrada a esta vista, se redireccion a la lista de acciones
-
+                //al realizarse la compra, se borra los datos en cache de esa accion y se bloque la entrada a esta vista, se redireccion a la lista de
+                List<Accion> accionesP = this.memoryCache.Get<List<Accion>>("PENDIENTES");
+                Accion accioP = accionesP.Find(z => z.ID == accion.ID);
+                accionesP.Remove(accioP);
+                this.memoryCache.Set("PENDIENTES", accionesP);
                 return RedirectToAction("CompraCompleta", "Tienda");
 
             }
@@ -189,8 +276,8 @@ namespace ProyectoNetCore.Controllers.Tienda
             if (ideliminar != null)
             {
                 List<Accion> acciones = this.memoryCache.Get<List<Accion>>("PENDIENTES");
-                Accion cubo = acciones.Find(z => z.ID == ideliminar.Value);
-                acciones.Remove(cubo);
+                Accion accion = acciones.Find(z => z.ID == ideliminar.Value);
+                acciones.Remove(accion);
 
                 if (acciones.Count == 0)
                 {

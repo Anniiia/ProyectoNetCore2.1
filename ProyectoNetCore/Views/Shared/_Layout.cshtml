@@ -1,5 +1,5 @@
 ﻿﻿﻿@{
-    List<Accion> acciones = memoryCache.Get<List<Accion>>("PENDIENTE");
+    List<Accion> acciones = memoryCache.Get<List<Accion>>("PENDIENTES");
     int total = memoryCache.Get<int>("TOTAL");
 }
 
@@ -40,16 +40,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="AccionGeneral" asp-action="Prueba">Prueba</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Register">Registro</a>
-                        </li>
+                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tienda" asp-action="Productos">Comprar acciones</a>
                         </li>
-                        @if (acciones != null)
+                        @* @if (acciones != null)
                         {
                             <li class="nav-item">
                                 <span>
@@ -57,8 +57,8 @@
                                 </span>
                             </li>
 
-                        } 
-                         <partial name="_MenuUsuarios" />
+                        } *@
+                        <partial name="_MenuUsuarios" />
                     </ul>
                 </div>
             </div> 
@@ -91,7 +91,7 @@
     <script src="~/js/world-merc.js"></script>
     <script src="~/js/polyfill.js"></script>
     <script src="~/js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
