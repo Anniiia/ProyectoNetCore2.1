@@ -51,33 +51,33 @@ namespace ProyectoNetCore.Repositories
             this.contextCompras = contextCompras;
         }
 
-        //public List<SeriePastel> GetDataDum(int idusuario)
-        //{
-        //    //List<SeriePastel> lista = new List<SeriePastel>();
-        //    var consulta = from datos in this.contextCompras.Compras where (datos.idUsuairo == idusuario) select datos;
+        public List<SeriePastel> GetDataDum(int idusuario)
+        {
+            //List<SeriePastel> lista = new List<SeriePastel>();
+            var consulta = from datos in this.contextCompras.Compras where (datos.idUsuairo == idusuario) select datos;
 
-        //    List<Compra> compras = consulta.ToList();
+            List<Compra> compras = consulta.ToList();
 
-        //    List<SeriePastel> lista = new List<SeriePastel>();
+            List<SeriePastel> lista = new List<SeriePastel>();
 
-        //    foreach (var col in compras)
-        //    {
-        //        SeriePastel li = new SeriePastel();
-        //        li.Nombre = "asd"+col.idAccion;
-        //        li.Total = col.Total;
-        //        li.sliced = false;
-        //        li.selected = false;
-        //        lista.Add(li);
-        //    }
+            foreach (var col in compras)
+            {
+                SeriePastel li = new SeriePastel();
+                li.name = "asd" + col.idAccion;
+                li.y = col.Total;
+                li.sliced = false;
+                li.selected = false;
+                lista.Add(li);
+            }
 
 
-        //    //lista.Add(new SeriePastel("Angular", 45));
-        //    //lista.Add(new SeriePastel("Vue", 50));
-        //    //lista.Add(new SeriePastel("React", 30));
-        //    //lista.Add(new SeriePastel("Css", 20));
+            //lista.Add(new SeriePastel("Angular", 45));
+            //lista.Add(new SeriePastel("Vue", 50));
+            //lista.Add(new SeriePastel("React", 30));
+            //lista.Add(new SeriePastel("Css", 20));
 
-        //    return lista;
-        //}
+            return lista;
+        }
 
         public async Task<List<Compra>> GetCompras() {
 

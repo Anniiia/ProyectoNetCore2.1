@@ -61,12 +61,12 @@ namespace ProyectoNetCore.Controllers.Tienda
 
         public JsonResult DataPastel() {
 
-            //int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
-            //List<SeriePastel> lista = this.repoCompras.GetDataDum(usuario);
-            //return Json(lista);
-            SeriePastel serie = new SeriePastel("",0);
+            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            List<SeriePastel> lista = this.repoCompras.GetDataDum(usuario);
+            return Json(lista);
+            //SeriePastel serie = new SeriePastel("",0);
 
-            return Json(serie.GetDataDum());
+            //return Json(serie.GetDataDum());
         }
 
         public async Task<IActionResult> _GraficoDineroInvertido()
