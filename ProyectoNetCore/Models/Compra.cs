@@ -10,6 +10,7 @@ namespace ProyectoNetCore.Models
         [Column("IDCOMPRA")]
         public int idCompra { get; set; }
 
+
         [Column("IDUSUARIO")]
         public int idUsuairo { get; set; }
 
