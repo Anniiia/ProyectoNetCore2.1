@@ -42,7 +42,7 @@ function GraficaBarras(data) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)'
+                text: 'Dinero invertido'
             }
         },
         legend: {
