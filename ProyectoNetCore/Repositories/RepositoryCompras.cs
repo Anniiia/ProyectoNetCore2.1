@@ -44,11 +44,13 @@ namespace ProyectoNetCore.Repositories
     {
         private UsuariosContext context;
         private ComprasContext contextCompras;
+        private AccionesContext contextAcc;
 
-        public RepositoryCompras(UsuariosContext context, ComprasContext contextCompras)
+        public RepositoryCompras(UsuariosContext context, ComprasContext contextCompras, AccionesContext contextAcc)
         {
             this.context = context;
             this.contextCompras = contextCompras;
+            this.contextAcc = contextAcc;
         }
 
         public List<SeriePastel> GetDataDum(int idusuario)
@@ -63,6 +65,8 @@ namespace ProyectoNetCore.Repositories
             foreach (var col in compras)
             {
                 SeriePastel li = new SeriePastel();
+                int idaccion = col.idAccion;
+                string nombre = from datos in this.contextAcc.Acciones where (datos.ID == idaccion) select datos.Nombre;
                 li.name = "asd" + col.idAccion;
                 li.y = col.Total;
                 li.sliced = false;
