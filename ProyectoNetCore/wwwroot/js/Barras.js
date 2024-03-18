@@ -24,10 +24,10 @@ function GraficaBarras(data) {
             type: 'column'
         },
         title: {
-            text: 'World\'s largest cities per 2021'
+            text: 'Compras realizadas en 2023'
         },
         subtitle: {
-            text: 'Source: <a href="https://worldpopulationreview.com/world-cities" target="_blank">World Population Review</a>'
+            text: ''
         },
         xAxis: {
             type: 'category',
@@ -49,7 +49,7 @@ function GraficaBarras(data) {
             enabled: false
         },
         tooltip: {
-            pointFormat: 'Population in 2021: <b>{point.y:.1f} millions</b>'
+            pointFormat: 'Compra: <b>{point.y:.1f} k</b>'
         },
         series: [{
             name: 'Population',
