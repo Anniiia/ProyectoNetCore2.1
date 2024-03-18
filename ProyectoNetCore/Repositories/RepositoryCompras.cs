@@ -5,6 +5,7 @@ using ProyectoNetCore.Data;
 using ProyectoNetCore.Helpers;
 using ProyectoNetCore.Models;
 using System.Data;
+using System.Diagnostics.Metrics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 #region PROCEDIMIENTOS ALMACENADOS
@@ -21,6 +22,20 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 //    VALUES (@idusuario, @ideaccion, @precio, @cantidad, @total)
 //END
 
+//create PROCEDURE SP_NOMBRE_COMPR
+//    @idaccion INT, @nombre nvarchar(100) OUT
+//AS
+//BEGIN
+//    SELECT @nombre = Nombre
+//    FROM accion
+//    WHERE id = @idaccion;
+//select @nombre
+//END
+
+//   DECLARE @nombre NVARCHAR(100);
+
+//exec SP_NOMBRE_COMPR 21, @nombre
+
 #endregion
 
 namespace ProyectoNetCore.Repositories
@@ -36,6 +51,38 @@ namespace ProyectoNetCore.Repositories
             this.contextCompras = contextCompras;
         }
 
+        //public List<SeriePastel> GetDataDum(int idusuario)
+        //{
+        //    //List<SeriePastel> lista = new List<SeriePastel>();
+        //    var consulta = from datos in this.contextCompras.Compras where (datos.idUsuairo == idusuario) select datos;
+
+        //    List<Compra> compras = consulta.ToList();
+
+        //    List<SeriePastel> lista = new List<SeriePastel>();
+
+        //    foreach (var col in compras)
+        //    {
+        //        SeriePastel li = new SeriePastel();
+        //        li.Nombre = "asd"+col.idAccion;
+        //        li.Total = col.Total;
+        //        li.sliced = false;
+        //        li.selected = false;
+        //        lista.Add(li);
+        //    }
+
+
+        //    //lista.Add(new SeriePastel("Angular", 45));
+        //    //lista.Add(new SeriePastel("Vue", 50));
+        //    //lista.Add(new SeriePastel("React", 30));
+        //    //lista.Add(new SeriePastel("Css", 20));
+
+        //    return lista;
+        //}
+
+        public async Task<List<Compra>> GetCompras() {
+
+            return await this.contextCompras.Compras.ToListAsync();
+        }
 
         public async Task<int> numeroComprasAsync(int idusuario)
         {

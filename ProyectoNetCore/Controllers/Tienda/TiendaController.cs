@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using ProyectoNetCore.Helpers;
 using ProyectoNetCore.Models;
 using ProyectoNetCore.Repositories;
@@ -9,6 +10,9 @@ using System;
 using System.Globalization;
 using System.Security.Claims;
 using static ScrapySharp.Core.Token;
+using LiveCharts;
+using LiveCharts.Wpf;
+using Blazor_ApexCharts;
 
 namespace ProyectoNetCore.Controllers.Tienda
 {
@@ -26,6 +30,43 @@ namespace ProyectoNetCore.Controllers.Tienda
             this.repoUser = repoUser;
             this.repoCompras = repoCompras;
             this.memoryCache = memoryCache;
+        }
+
+        //public async Task<IActionResult> _GraficoPrueba()
+        //{
+        //    var dt = new VisualizationDataTable();
+        //    dt.AddColumn("Date", "string");
+        //    dt.AddColumn("Events", "number");
+        //    dt
+        //        .NewRow("25-05-2016", 123)
+        //        .NewRow("26-05-2016", 111)
+        //        .NewRow("27-05-2016", 132)
+        //        .NewRow("28-05-2016", 121)
+        //        .NewRow("29-05-2016", 109)
+        //        .NewRow("30-05-2016", 126)
+        //        ;
+
+        //    var chart = new ChartViewModel
+        //    {
+        //        Title = "Events",
+        //        Subtitle = "per date",
+        //        DataTable = dt
+        //    };
+
+        //    return Content(JsonConvert.SerializeObject(chart), "application/json");
+        //}
+
+        //https://www.youtube.com/watch?v=JGi6Uj5AaAg
+        //https://www.highcharts.com/demo/highcharts/pie-legend
+
+        public JsonResult DataPastel() {
+
+            //int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            //List<SeriePastel> lista = this.repoCompras.GetDataDum(usuario);
+            //return Json(lista);
+            SeriePastel serie = new SeriePastel("",0);
+
+            return Json(serie.GetDataDum());
         }
 
         public async Task<IActionResult> _GraficoDineroInvertido()
@@ -93,6 +134,8 @@ namespace ProyectoNetCore.Controllers.Tienda
             int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
 
             double Totalcompras = await this.repoCompras.totalComprasAsync(usuario);
+
+            //List<Compra> Orders = await this.repoCompras.GetCompras();
 
             //return StatusCode(StatusCodes.Status200OK, Totalcompras); 
              return View();

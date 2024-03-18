@@ -40,6 +40,9 @@ using System.Security.Principal;
 //DECLARE @fecha date;
 //EXEC SP_FECHA_ULTIMO_REGISTRO;
 //SELECT @fecha AS UltimaFecha;
+
+
+
 #endregion
 
 namespace ProyectoNetCore.Repositories

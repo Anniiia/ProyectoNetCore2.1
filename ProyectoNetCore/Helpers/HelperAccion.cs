@@ -33,7 +33,7 @@ namespace ProyectoNetCore.Helpers
 
             int contador = 0;
 
-            for (int i = 0; i <= nodes.ToList().Count - 1; i++)
+            for (int i = 0; i <= 9 - 1; i++)
             {
 
                 Accion accion = new Accion();

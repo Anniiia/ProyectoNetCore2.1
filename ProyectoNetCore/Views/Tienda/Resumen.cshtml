@@ -1,6 +1,4 @@
-﻿@model double
-
-<div class="card">
+﻿<div class="card">
     <div class="card-header">
         <div class="card-body">
             <canvas id="chartResumen" style="max-height:250px;"></canvas>
@@ -9,8 +7,19 @@
 </div> 
 
 
+<div style="background-color:plum" id="pastel">
+</div>
+
+
+
 @* https://localhost:7112/Tienda/Resumen *@
 @section Scripts {
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+   
     <script>
         $(document).ready(function () {
     
@@ -22,7 +31,15 @@
                 $("#graficaganancias").load("/Tienda/_GraficoDineroGanado");
 
         })
+
+            // Data retrieved from https://netmarketshare.com/
+    
     </script>
+    <script>
+        var urlBase = 'http://' + '@Context.Request.Host' + '@Context.Request.Path';
+    </script>
+
+    <script src="~/js/Pastel.js"></script>
 }
 
 
@@ -61,6 +78,8 @@
             <!-- End Col -->
         </div>
         <!-- End Row -->
+
+        
         <div class="row">
             <div class="col-lg-7">
                 <div class="card-style mb-30">
