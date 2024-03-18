@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoNetCore.Data;
 using ProyectoNetCore.Helpers;
 using ProyectoNetCore.Models;
+using System;
 using System.Data;
 using System.Diagnostics.Metrics;
+using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 #region PROCEDIMIENTOS ALMACENADOS
@@ -66,12 +68,26 @@ namespace ProyectoNetCore.Repositories
             {
                 SeriePastel li = new SeriePastel();
                 int idaccion = col.idAccion;
-                string nombre = from datos in this.contextAcc.Acciones where (datos.ID == idaccion) select datos.Nombre;
-                li.name = "asd" + col.idAccion;
+                var con = (from datos in this.contextAcc.Acciones where (datos.ID == idaccion) select datos).FirstOrDefault();
+                string nombre = con.Nombre;
+
+                
+                Console.WriteLine(nombre);
+                li.name = nombre;
                 li.y = col.Total;
                 li.sliced = false;
                 li.selected = false;
-                lista.Add(li);
+                SeriePastel compro = li;
+                compro = lista.FirstOrDefault(objeto => objeto.name == nombre);
+                if (compro != null)
+                {
+                    compro.y += li.y;
+                }
+                else 
+                {
+                    lista.Add(li);
+                }
+                
             }
 
 

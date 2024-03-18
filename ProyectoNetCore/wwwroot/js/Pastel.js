@@ -4,8 +4,8 @@ $(document).ready(function () {
         type: "GET",
         contentType: "applicaion/json; charset = utf-8",
         dataType: "json",
-        url: "https://localhost:7112/Tienda/DataPastel",
-        /*url: urlBase + "/DataPastel", url: urlBase + "/DataPastel",*/
+        /*url: "https://localhost:7112/Tienda/DataPastel",*/
+        url: urlBase,
         error: function () {
             alert("Error al cargar los datos")
         },
@@ -26,7 +26,7 @@ function GraficaPastel(data) {
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares in March, 2022',
+            text: 'Porcentaje de acciones compradas por empresa',
             align: 'left'
         },
         tooltip: {
@@ -48,7 +48,7 @@ function GraficaPastel(data) {
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Porcentaje',
             colorByPoint: true,
             data: data
         }]

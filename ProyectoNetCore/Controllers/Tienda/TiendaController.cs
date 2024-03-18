@@ -10,9 +10,6 @@ using System;
 using System.Globalization;
 using System.Security.Claims;
 using static ScrapySharp.Core.Token;
-using LiveCharts;
-using LiveCharts.Wpf;
-using Blazor_ApexCharts;
 
 namespace ProyectoNetCore.Controllers.Tienda
 {
@@ -59,6 +56,17 @@ namespace ProyectoNetCore.Controllers.Tienda
         //https://www.youtube.com/watch?v=JGi6Uj5AaAg
         //https://www.highcharts.com/demo/highcharts/pie-legend
 
+        public JsonResult DataBarras()
+        {
+
+            //int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            //List<SeriePastel> lista = this.repoCompras.GetDataDum(usuario);
+            //return Json(lista);
+            SerieBarra serie = new SerieBarra();
+
+            return Json(serie.GetDataDum());
+        }
+
         public JsonResult DataPastel() {
 
             int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
@@ -67,15 +75,6 @@ namespace ProyectoNetCore.Controllers.Tienda
             //SeriePastel serie = new SeriePastel("",0);
 
             //return Json(serie.GetDataDum());
-        }
-
-        public async Task<IActionResult> _GraficoDineroInvertido()
-        {
-            return PartialView("_GraficoDineroInvertido");
-        }
-        public async Task<IActionResult> _GraficoDineroGanado()
-        {
-            return PartialView("_GraficoDineroGanado");
         }
         public async Task<IActionResult> _TotalGanancias()
         {
