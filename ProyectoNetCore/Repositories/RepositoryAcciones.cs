@@ -57,7 +57,7 @@ namespace ProyectoNetCore.Repositories
         public RepositoryAcciones(AccionesContext context, HelperAccion helperAccion) { 
             this.context = context;
             this.helperAccion = helperAccion;
-            string connectionString = "Data Source=LOCALHOST\\SQLEXPRESS;Initial Catalog=PROYECTO;Persist Security Info=True;User ID=sa;Password=MCSD2023; Trust Server Certificate=True";
+            string connectionString = "Data Source=LOCALHOST\\SQLEXPRESS;Initial Catalog=PROYECTOANNIE;Persist Security Info=True;User ID=sa;Password=MCSD2023; Trust Server Certificate=True";
             string sql = "select * from accion";
             this.cn = new SqlConnection(connectionString);
             this.com = new SqlCommand();
