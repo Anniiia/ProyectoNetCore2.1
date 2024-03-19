@@ -1,5 +1,5 @@
 ﻿@{
-    string usuario = Context.Session.GetString("USUARIO");
+    // string usuario = Context.Session.GetString("USUARIO");
 
     List<Accion> acciones = memoryCache.Get<List<Accion>>("PENDIENTES");
 
@@ -33,10 +33,10 @@
 } *@
 
 
-@if (usuario == null)
+@if (Context.User.Identity.IsAuthenticated == false)
 {
     <li class="nav-item">
-        <a asp-controller="Usuarios" asp-action="Login"
+        <a asp-controller="Tienda" asp-action="Productos"
            class="nav-link">
             Log In
         </a>
@@ -46,7 +46,7 @@ else
 {
     <li class="nav-item dropdown" id="usuarios">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            @usuario
+            @Context.User.Identity.Name
         </a>
         <ul class="dropdown-menu">
             <li class="nav-item">
@@ -72,7 +72,7 @@ else
             <li class="nav-item">
                 <a asp-controller="Usuarios" asp-action="Logout"
                    class="nav-link text-danger">
-                    Cerrar sesión @usuario
+                    Cerrar sesión @Context.User.Identity.Name
                 </a>
             </li>
         </ul>

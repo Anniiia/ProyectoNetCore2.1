@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoNetCore.Helpers;
 using ProyectoNetCore.Models;
 using ProyectoNetCore.Repositories;
+using System.Numerics;
+using System.Security.Claims;
 
 namespace ProyectoNetCore.Controllers
 {
@@ -55,9 +59,40 @@ namespace ProyectoNetCore.Controllers
             }
             else
             {
-                HttpContext.Session.SetString("IDUSUARIO", user.IdUsuario.ToString());
-                HttpContext.Session.SetString("USUARIO", email);
-                return RedirectToAction("Productos", "Tienda");
+                ClaimsIdentity identity =
+                    new ClaimsIdentity(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        ClaimTypes.Name, ClaimTypes.Role);
+                //CREAMOS EL CLAIM PARA EL NOMBRE (APELLIDO)
+                Claim claimName =
+                    new Claim(ClaimTypes.Name, user.Email);
+                identity.AddClaim(claimName);
+                Claim claimId =
+                    new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString());
+                identity.AddClaim(claimId);
+                //Claim claimEspecialidad =
+                //    new Claim(ClaimTypes.Role, doctor.Especialidad);
+                //identity.AddClaim(claimEspecialidad);
+
+                //COMO POR AHORA NO VOY A UTILIZAR NI SE UTILIZAR ROLES
+                //NO LO INCLUIMOS
+                ClaimsPrincipal userPrincipal =
+                    new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    userPrincipal);
+                //LO VAMOS A LLEVAR A UNA VISTA QUE TODAVIA NO TENEMOS
+                //QUE SERA EL PERFIL DEL EMPLEADO
+                string controller = TempData["CONTROLLER"].ToString();
+                string action = TempData["ACTION"].ToString();
+
+                return RedirectToAction(action, controller);
+
+
+
+                //HttpContext.Session.SetString("IDUSUARIO", user.IdUsuario.ToString());
+                //HttpContext.Session.SetString("USUARIO", email);
+                //return RedirectToAction("Productos", "Tienda");
                 //return View(user);
             }
         }
@@ -70,11 +105,16 @@ namespace ProyectoNetCore.Controllers
             return View();
         }
 
-        public IActionResult Logout() {
+        public async Task<IActionResult> Logout() {
 
-            HttpContext.Session.Remove("IDUSUARIO");
-            HttpContext.Session.Remove("USUARIO");
-            return View();
+            await HttpContext.SignOutAsync
+                (CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+
+            //HttpContext.Session.Remove("IDUSUARIO");
+            //HttpContext.Session.Remove("USUARIO");
+            //return View();
         }
     }
 }

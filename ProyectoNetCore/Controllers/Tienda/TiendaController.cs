@@ -10,6 +10,8 @@ using System;
 using System.Globalization;
 using System.Security.Claims;
 using static ScrapySharp.Core.Token;
+using System.Runtime.CompilerServices;
+using ProyectoNetCore.Filters;
 
 namespace ProyectoNetCore.Controllers.Tienda
 {
@@ -69,7 +71,7 @@ namespace ProyectoNetCore.Controllers.Tienda
 
         public JsonResult DataPastel() {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             List<SeriePastel> lista = this.repoCompras.GetDataDum(usuario);
             return Json(lista);
             //SeriePastel serie = new SeriePastel("",0);
@@ -79,7 +81,7 @@ namespace ProyectoNetCore.Controllers.Tienda
         public async Task<IActionResult> _TotalGanancias()
         {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             //double TotalGananciasCompras = await this.repoCompras.totalComprasAsync(usuario);
 
@@ -91,7 +93,7 @@ namespace ProyectoNetCore.Controllers.Tienda
         public async Task<IActionResult> _TotalInvertido()
         {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value); ;
 
             double TotalInvertidoCompras = await this.repoCompras.totalComprasAsync(usuario);
 
@@ -102,7 +104,7 @@ namespace ProyectoNetCore.Controllers.Tienda
         public async Task<IActionResult> _ComprasRealizadas()
         {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             //int totalCompras = await this.repoCompras.totalComprasAsync(usuario);
 
@@ -116,7 +118,7 @@ namespace ProyectoNetCore.Controllers.Tienda
         public async Task<IActionResult> _TotalAcciones()
         {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             //int totalCompras = await this.repoCompras.totalComprasAsync(usuario);
 
@@ -130,7 +132,7 @@ namespace ProyectoNetCore.Controllers.Tienda
         public async Task<IActionResult> Resumen()
         {
 
-            int usuario = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+            int usuario = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value); ;
 
             double Totalcompras = await this.repoCompras.totalComprasAsync(usuario);
 
@@ -150,12 +152,13 @@ namespace ProyectoNetCore.Controllers.Tienda
             
         }
 
+        [AuthorizeUsuarios]
         public IActionResult Pendientes()
         {
-            if (HttpContext.Session.GetString("USUARIO") == null)
-            {
-                return RedirectToAction("AccesoDenegado", "Managed");
-            }
+            //if (HttpContext.Session.GetString("USUARIO") == null)
+            //{
+            //    return RedirectToAction("AccesoDenegado", "Managed");
+            //}
 
             List<Accion> acciones =  new List<Accion>();
             if (this.memoryCache.Get<List<Accion>>("PENDIENTES") != null) 
@@ -166,6 +169,7 @@ namespace ProyectoNetCore.Controllers.Tienda
 
             return View(acciones);
         }
+        [AuthorizeUsuarios]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Pendientes(int? idaccion
@@ -173,23 +177,26 @@ namespace ProyectoNetCore.Controllers.Tienda
         {
             //COMPROBAMOS SI EXISTE NUESTRO USUARIO ANTES 
             //DE REALIZAR LA COMPRA
-            if (HttpContext.Session.GetString("USUARIO") == null)
-            {
-                return RedirectToAction("AccesoDenegado", "Managed");
-            }
-            else
-            {
+            //if (HttpContext.Session.GetString("USUARIO") == null)
+            //{
+            //    return RedirectToAction("AccesoDenegado", "Managed");
+            //}
+            //else
+            //{
 
-                return RedirectToAction("PedidoFinal", idaccion);
-            }
+            //    return RedirectToAction("PedidoFinal", idaccion);
+            //}
+            return RedirectToAction("PedidoFinal", idaccion);
         }
+
+        [AuthorizeUsuarios]
         public async Task<IActionResult> Productos(int? addpendiente, int? ideliminar)
         {
             //comprobamos si existe el usuario para dejarle entrar o no 
-            if (HttpContext.Session.GetString("USUARIO") == null)
-            {
-                return RedirectToAction("AccesoDenegado", "Managed");
-            }
+            //if (HttpContext.Session.GetString("USUARIO") == null)
+            //{
+            //    return RedirectToAction("AccesoDenegado", "Managed");
+            //}
             List<Accion> acciones = await this.repo.PedirAccionesBBDD();
             //var acciones = this.helperAccion.PedirAccionesPag();
 
@@ -241,6 +248,7 @@ namespace ProyectoNetCore.Controllers.Tienda
             List<Accion> accionesTodas = await this.repo.PedirAccionesBBDD();
             return View(accionesTodas);
         }
+        [AuthorizeUsuarios]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Productos(int? idaccion, int?addpendiente, int? ideliminar
@@ -248,15 +256,16 @@ namespace ProyectoNetCore.Controllers.Tienda
         {
             //COMPROBAMOS SI EXISTE NUESTRO USUARIO ANTES 
             //DE REALIZAR LA COMPRA
-            if (HttpContext.Session.GetString("USUARIO") == null)
-            {
-                return RedirectToAction("AccesoDenegado", "Managed");
-            }
-            else
-            {
+            //if (HttpContext.Session.GetString("USUARIO") == null)
+            //{
+            //    return RedirectToAction("AccesoDenegado", "Managed");
+            //}
+            //else
+            //{
 
-                return RedirectToAction("PedidoFinal", idaccion);
-            }
+            //    return RedirectToAction("PedidoFinal", idaccion);
+            //}
+            return RedirectToAction("PedidoFinal", idaccion);
         }
 
         public async Task<IActionResult> PedidoFinal(int idaccion)
@@ -285,7 +294,8 @@ namespace ProyectoNetCore.Controllers.Tienda
 
                 Compra compra = new Compra();
                 Accion accion = ((Accion)this.memoryCache.Get("ACCION"));
-                compra.idUsuairo = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+                //compra.idUsuairo = int.Parse(HttpContext.Session.GetString("IDUSUARIO"));
+                compra.idUsuairo = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 compra.idAccion = accion.ID;
                 //compra.Precio = double.Parse(accion.Ultimo);
                 string texto = accion.Ultimo.Replace('.', ',');
@@ -311,10 +321,19 @@ namespace ProyectoNetCore.Controllers.Tienda
 
                 this.memoryCache.Remove("ACCION");
                 //al realizarse la compra, se borra los datos en cache de esa accion y se bloque la entrada a esta vista, se redireccion a la lista de
-                List<Accion> accionesP = this.memoryCache.Get<List<Accion>>("PENDIENTES");
-                Accion accioP = accionesP.Find(z => z.ID == accion.ID);
-                accionesP.Remove(accioP);
-                this.memoryCache.Set("PENDIENTES", accionesP);
+                if (this.memoryCache.Get("PENDIENTES") != null) {
+                    List<Accion> accionesP = this.memoryCache.Get<List<Accion>>("PENDIENTES");
+                    Accion accioP = accionesP.Find(z => z.ID == accion.ID);
+                    accionesP.Remove(accioP);
+                    this.memoryCache.Set("PENDIENTES", accionesP);
+                    return RedirectToAction("CompraCompleta", "Tienda");
+                }
+                
+
+                //List<Accion> accionesP = this.memoryCache.Get<List<Accion>>("PENDIENTES");
+                //Accion accioP = accionesP.Find(z => z.ID == accion.ID);
+                //accionesP.Remove(accioP);
+                //this.memoryCache.Set("PENDIENTES", accionesP);
                 return RedirectToAction("CompraCompleta", "Tienda");
 
             }
